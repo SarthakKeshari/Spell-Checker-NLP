@@ -1,0 +1,70 @@
+{% extends 'nav.html' %}
+
+{% block title %}Document Check - {% endblock title %}
+
+{% block body %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-5 border-bottom">
+    <h1 class="h2">Document Check</h1>
+</div>
+<div class="container">
+    <form enctype="multipart/form-data" action="./document_check.html" method="POST" class="row">
+    {% csrf_token %}
+        <div class="input-group mb-3">
+            <div class="custom-file bg-light border px-2">
+                <input type="file" class="" id="inputFile" name="inputFile" accept="text/plain" placeholder="Choose file" required>
+            </div>
+            <div class="input-group-append">
+                <input type="submit" class="btn btn-primary" id="inputGroupFileAddon02" value="Upload">
+            </div>
+        </div>
+    </form>
+
+    {%if document is not None%}
+    <div class="p-5">
+        <p class="h5 mb-4">Result</p>
+        <div class="px-2">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                    <th scope="col">Given document</th>
+                    <th scope="col">Corrected document</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td id="doc" style="background-color: #aaaaff20">{{document}}</td>
+                    <td id="corr_doc" style="background-color: #aaffaa20">{{corrected_document}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <script>
+                let doc = document.getElementById("doc").innerText.split(' ')
+                let corr_doc = document.getElementById("corr_doc").innerText.split(' ')
+
+                let doc_html = ``
+                let corr_doc_html = ``
+
+                console.log(doc.length, corr_doc.length)
+                for(let i=0; i<doc.length; i++)
+                {
+                    if(doc[i]!=corr_doc[i])
+                    {
+                        doc_html+=doc[i]+" ";
+                        corr_doc_html+=`<span class="text-danger font-weight-bold">`+corr_doc[i]+`</span>`+" ";
+                    }
+                    else
+                    {
+                        doc_html+=doc[i]+" ";
+                        corr_doc_html+=corr_doc[i]+" ";
+                    }
+                }
+
+                document.getElementById("doc").innerHTML = doc_html
+                document.getElementById("corr_doc").innerHTML = corr_doc_html
+            </script>
+        </div>
+    </div>
+    {%endif%}
+</div>
+{% endblock body %}

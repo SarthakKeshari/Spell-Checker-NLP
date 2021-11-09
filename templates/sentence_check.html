@@ -1,0 +1,89 @@
+{% extends 'nav.html' %}
+
+{% block title %}Sentence Check - {% endblock title %}
+
+{% block body %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-5 border-bottom">
+    <h1 class="h2">Sentence Check</h1>
+</div>
+<div class="container">
+    <form action="./sentence_check.html" method="GET" class="row">
+    {% csrf_token %}
+        <div class="col-9 form-group">
+            <textarea class="form-control" id="inputSentence" name="inputSentence" placeholder="Enter your sentence here" rows="3" required></textarea>
+        </div>
+        <div class="col-3">
+            <button type="submit" class="btn btn-primary btn-block">Spell-Check</button>
+        </div>
+    </form>
+    {%if sentence is not None%}
+    <div class="p-5">
+        <p class="h5 mb-4">Result</p>
+        <div class="px-2">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                    <th scope="col">Given Sentence</th>
+                    <th scope="col">Corrected Sentence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td style="background-color: #aaaaff20"><span id="sent">{{sentence}}</span></td>
+                    <td style="background-color: #aaffaa20"><span id="corr_sent">{{corrected_sentence}}</span>
+                        <hr>
+                        <p class="h6">Based on different preprocessing techniques :</p>
+                        <p class="mb-1">1) Using <code>word_tokenize</code></p>
+                        <div class="pl-5 mb-3">
+                            {{word_tokenize_corrected_sentence}}
+                        </div>
+                        <p class="mb-1">2) Using <code>TreebankWordTokenizer</code></p>
+                        <div class="pl-5 pb-2">
+                            {{TreebankWordTokenizer_corrected_sentence}}
+                        </div>
+                        <p class="mb-1">3) Using <code>WordPunctTokenizer</code></p>
+                        <div class="pl-5 pb-2">
+                            {{WordPunctTokenizer_corrected_sentence}}
+                        </div>
+                        <p class="mb-1">4) Using <code>RegexpTokenizer</code></p>
+                        <div class="pl-5 pb-2">
+                            {{RegexpTokenizer_corrected_sentence}}
+                        </div>
+                        <p class="mb-1">5) Using <code>regexp_tokenize</code></p>
+                        <div class="pl-5 pb-2">
+                            {{regexp_tokenize_corrected_sentence}}
+                        </div>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+            <script>
+                let sent = document.getElementById("sent").innerText.split(' ')
+                let corr_sent = document.getElementById("corr_sent").innerText.split(' ')
+
+                let sent_html = ``
+                let corr_sent_html = ``
+
+                console.log(sent.length, corr_sent.length)
+                for(let i=0; i<sent.length; i++)
+                {
+                    if(sent[i]!=corr_sent[i])
+                    {
+                        sent_html+=sent[i]+" ";
+                        corr_sent_html+=`<span class="text-danger font-weight-bold">`+corr_sent[i]+`</span>`+" ";
+                    }
+                    else
+                    {
+                        sent_html+=sent[i]+" ";
+                        corr_sent_html+=corr_sent[i]+" ";
+                    }
+                }
+
+                document.getElementById("sent").innerHTML = sent_html
+                document.getElementById("corr_sent").innerHTML = corr_sent_html
+            </script>
+        </div>
+    </div>
+    {%endif%}
+</div>
+{% endblock body %}

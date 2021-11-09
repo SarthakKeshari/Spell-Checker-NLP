@@ -1,0 +1,35 @@
+{% extends 'nav.html' %}
+
+{% block title %}Home - {% endblock title %}
+
+{% block body %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-5 border-bottom">
+    <h1 class="h2">Spell Tools</h1>
+</div>
+<div class="container">
+    <div class="list-group list-group-flush">
+        <a href="./word_check.html" class="list-group-item list-group-item-action p-4">
+            <p class="h5">Word Check</p>
+            <hr class="mt-1 bg-dark">
+            <p>
+                This feature helps you to check spelling of the word you enter.Enter a word you want to correct then press spell check to get the corrected word.
+            </p>
+        </a>
+        <a href="./sentence_check.html" class="list-group-item list-group-item-action p-4">
+            <p class="h5">Sentence Check</p>
+            <hr class="mt-1 bg-dark">
+            <p>
+                This feature helps you to check spelling of a sentence you enter. Enter a sentence you want to correct then press spell check to get the correct sentence based on different  preprocessing techniques.
+            </p>
+        </a>
+        <a href="./document_check.html" class="list-group-item list-group-item-action p-4">
+            <p class="h5">Document Check</p>
+            <hr class="mt-1 bg-dark">
+            <p>
+                This feature helps you to check spelling of a document. Choose a document you want to correct then press  upload all the spelling errors in the document will be corrected.
+            </p>
+        </a>
+        
+      </div>
+</div>
+{% endblock body %}

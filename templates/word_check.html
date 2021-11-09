@@ -1,0 +1,41 @@
+{% extends 'nav.html' %}
+
+{% block title %}Word Check - {% endblock title %}
+
+{% block body %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-5 border-bottom">
+    <h1 class="h2">Word Check</h1>
+</div>
+<div class="container">
+    <form action="./word_check.html" method="GET" class="row">
+    {% csrf_token %}
+        <div class="col-9">
+            <input type="text" class="form-control" id="inputWord" name="inputWord" placeholder="Enter your word here" required>
+        </div>
+        <div class="col-3">
+            <button type="submit" class="btn btn-primary btn-block">Spell-Check</button>
+        </div>
+    </form>
+    {%if word is not None%}
+    <div class="p-5">
+        <p class="h5 mb-4">Result</p>
+        <div class="px-2">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                    <th scope="col">Given Word</th>
+                    <th scope="col">Corrected Word</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td style="background-color: #aaaaff20">{{word}}</td>
+                    <td style="background-color: #aaffaa20">{{corrected_word}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {%endif%}
+</div>
+{% endblock body %}
